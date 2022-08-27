@@ -8,6 +8,7 @@
         public double? Latitude { get; set; }
         public double? Longitude { get; set; }
         public string Region { get; set; }
+        public string State { get; set; }
         public string Electorate { get; set; }
         public string ElectorateRating { get; set; }
     }

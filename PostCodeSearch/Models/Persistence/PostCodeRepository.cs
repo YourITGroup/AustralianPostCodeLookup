@@ -22,10 +22,18 @@ namespace PostCodeSearch.Models.Persistence
                 return Enumerable.Empty<PostCodes>();
             }
 
-            return await Database.FetchAsync<PostCodes>(Database.SqlContext.Sql().Where("PostCode like @0 + '%' OR Locality LIKE @0 + '%'", filter.Trim()));
+            return await Database.FetchAsync<PostCodes>(
+                Database.SqlContext.Sql()
+                        .Select<PostCodes>()
+                        .From<PostCodes>()
+                        .Where<PostCodes>(p =>
+                                p.PostCode.Contains(cleanFilter) ||
+                                p.Locality.Contains(cleanFilter)));
+
+            //return await Database.FetchAsync<PostCodes>(Database.SqlContext.Sql().Where("PostCode like @0 + '%' OR Locality LIKE @0 + '%'", filter.Trim()));
         }
 
-        public async Task<IEnumerable<PostCodes>> FindByLGA(string filter)
+        public async Task<IEnumerable<PostCodes>> FindByRegion(string filter)
         {
             var cleanFilter = filter.Trim();
             if (cleanFilter.IsNullOrWhiteSpace())
@@ -33,7 +41,32 @@ namespace PostCodeSearch.Models.Persistence
                 return Enumerable.Empty<PostCodes>();
             }
 
-            return await Database.FetchAsync<PostCodes>(Database.SqlContext.Sql().Where("Region like @0 + '%' OR Electorate LIKE @0 + '%'", filter.Trim()));
+            return await Database.FetchAsync<PostCodes>(
+                Database.SqlContext.Sql()
+                        .Select<PostCodes>()
+                        .From<PostCodes>()
+                        .Where<PostCodes>(p =>
+                                p.Region.Contains(cleanFilter) ||
+                                p.Electorate.Contains(cleanFilter)));
+
+            //return await Database.FetchAsync<PostCodes>(Database.SqlContext.Sql().Where("Region like @0 + '%' OR Electorate LIKE @0 + '%'", filter.Trim()));
+        }
+
+        public async Task<IEnumerable<RegionLookup>> FindRegions(string filter)
+        {
+            var cleanFilter = filter.Trim();
+            if (cleanFilter.IsNullOrWhiteSpace())
+            {
+                return Enumerable.Empty<RegionLookup>();
+            }
+
+            return await Database.FetchAsync<RegionLookup>(
+                Database.SqlContext.Sql()
+                        .SelectDistinct<RegionLookup>()
+                        .From<PostCodes>()
+                        .Where<PostCodes>(p =>
+                                p.Region.Contains(cleanFilter) ||
+                                p.Electorate.Contains(cleanFilter)));
         }
 
         public async Task<bool> ContainsData()

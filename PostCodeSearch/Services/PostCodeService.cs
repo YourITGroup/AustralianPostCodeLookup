@@ -44,6 +44,7 @@ namespace PostCodeSearch.Services
                         Id = p.Id,
                         Postcode = p.PostCode,
                         Locality = p.Locality,
+                        State = p.State,
                         Latitude = p.Lat,
                         Longitude = p.Long,
                         Region = p.Region,
@@ -55,15 +56,14 @@ namespace PostCodeSearch.Services
             return Enumerable.Empty<PostCodeLookup>();
         }
 
-
         /// <inheritdoc/>
-        public async Task<IEnumerable<PostCodeLookup>> FindByLGA(string search)
+        public async Task<IEnumerable<PostCodeLookup>> FindByRegion(string search)
         {
             if (search?.Length > 2)
             {
                 using (ScopeProvider.CreateScope(autoComplete: true))
                 {
-                    var postcodes = await postCodeRepository.FindByLGA(search);
+                    var postcodes = await postCodeRepository.FindByRegion(search);
                     return postcodes.Select(p => new PostCodeLookup
                     {
                         Id = p.Id,
@@ -78,6 +78,19 @@ namespace PostCodeSearch.Services
                 }
             }
             return Enumerable.Empty<PostCodeLookup>();
+        }
+
+        /// <inheritdoc/>
+        public async Task<IEnumerable<RegionLookup>> FindRegions(string search)
+        {
+            if (search?.Length > 2)
+            {
+                using (ScopeProvider.CreateScope(autoComplete: true))
+                {
+                    return await postCodeRepository.FindRegions(search);
+                }
+            }
+            return Enumerable.Empty<RegionLookup>();
         }
 
         public async Task<bool> PostCodesInitialised()
@@ -122,6 +135,7 @@ namespace PostCodeSearch.Services
                                 PostCode = p.PostCode,
                                 Locality = p.Locality,
                                 Region = p.LgaRegion,
+                                State = p.State,
                                 Electorate = p.Electorate,
                                 ElectorateRating = p.ElectorateRating,
                                 Lat = lat,

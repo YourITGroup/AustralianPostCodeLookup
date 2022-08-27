@@ -18,6 +18,9 @@ namespace PostCodeSearch.Models.Persistence
         [Column("PostCode")]
         public string PostCode { get; set; }
 
+        [Column("State")]
+        public string State { get; set; }
+
         [Column("Locality")]
         public string Locality { get; set; }
 

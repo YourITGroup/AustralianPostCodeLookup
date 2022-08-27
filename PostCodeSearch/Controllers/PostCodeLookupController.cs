@@ -34,8 +34,16 @@ namespace PostCodeSearch.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<PostCodeLookup>>> GetByLocalGovernmentArea(string search)
         {
-            var postCodes = await postCodeService.FindByLGA(search);
+            var postCodes = await postCodeService.FindByRegion(search);
             return Ok(postCodes);
+        }
+
+        [HttpGet("getLocalGovernmentAreas/{search:string}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<RegionLookup>>> GetLocalGovernmentAreas(string search)
+        {
+            var regions = await postCodeService.FindRegions(search);
+            return Ok(regions);
         }
     }
 }

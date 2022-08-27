@@ -8,7 +8,8 @@ namespace PostCodeSearch.Models.Persistence
         void ClearTable();
         Task<bool> ContainsData();
         Task<IEnumerable<PostCodes>> Find(string filter);
-        Task<IEnumerable<PostCodes>> FindByLGA(string filter);
+        Task<IEnumerable<PostCodes>> FindByRegion(string filter);
+        Task<IEnumerable<RegionLookup>> FindRegions(string filter);
         Task InsertBatch(IEnumerable<PostCodes> data);
         void SavePostCode(PostCodes postCode);
     }
