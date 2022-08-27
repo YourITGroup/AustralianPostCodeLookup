@@ -1,0 +1,36 @@
+name: PostCodeSearch - CI
+
+on:
+  pull_request:
+
+env:
+  OUTPUT_PATH: ${{ github.workspace }}\.output
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Fetch all history for all tags and branches
+      run: git fetch --prune --unshallow
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: PostCodeSearch
+
+    - name: Build
+      run: dotnet build --configuration Release
+      working-directory: PostCodeSearch
+
+    - name: Upload NuGet artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: nuget
+        path: ${{ env.OUTPUT_PATH }}

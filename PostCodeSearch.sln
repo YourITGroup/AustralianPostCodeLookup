@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostCodeSearch", "PostCodeSearch.csproj", "{D8F979EC-87BF-45F1-A46E-B5FD6D3A8068}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostCodeSearch", "PostCodeSearch/PostCodeSearch.csproj", "{D8F979EC-87BF-45F1-A46E-B5FD6D3A8068}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
