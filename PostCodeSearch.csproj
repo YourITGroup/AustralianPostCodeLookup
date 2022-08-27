@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+		<AssemblyName>$(MSBuildProjectName)</AssemblyName>
+		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+        <ContentTargetFolders>.</ContentTargetFolders>
+        <PackageId>$(MSBuildProjectName)</PackageId>
+        <Title>$(MSBuildProjectName)</Title>
+        <Description>Provides lookup services for Australian PostCodes and LGAs</Description>
+        <PackageTags>umbraco plugin package postcodes</PackageTags>
+		<Product>$(AssemblyName) for Umbraco 9+</Product>
+		<Company>Your IT Group Pty Ltd</Company>
+		<Authors>Robert Foster</Authors>
+		<RepositoryUrl>https://github.com/YourITGroup/PostCodeSearch</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageReadmeFile>README.nuget.md</PackageReadmeFile>
+		<Version>0.1.0-rc1</Version>
+		<Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+		<PackageReference Include="Octokit" Version="0.52.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+        <PackageReference Include="Umbraco.Cms.Web.Common" Version="9.5.0" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<!-- SourceLink: https://github.com/dotnet/sourcelink -->
+		<!-- Embed source files that are not tracked by the source control manager in the PDB -->
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+		<!-- SourceLink: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
+
+	<!-- Deterministic Builds: https://github.com/clairernovotny/DeterministicBuilds -->
+	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
+</Project>
