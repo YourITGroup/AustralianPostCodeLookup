@@ -19,6 +19,12 @@
 		<Version>0.1.0-rc1</Version>
 		<Nullable>enable</Nullable>
     </PropertyGroup>
+    <ItemGroup>
+      <None Include="..\README.nuget.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
 
     <ItemGroup>
 		<PackageReference Include="Octokit" Version="0.52.0" />
